@@ -1,0 +1,631 @@
+﻿<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<link as="font" crossorigin="" href="../font/SFNSDisplay-latin.50a4eaff3.woff2" rel="preload"/>
+<link as="font" crossorigin="" href="../font/SFNSText-latin.f09aa5229.woff2" rel="preload"/>
+<meta content="width=device-width,initial-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover,shrink-to-fit=no" name="viewport"/>
+<link crossorigin="crossorigin" href="../../index.htm" rel="preconnect"/>
+<link as="style" href="../../ss/mobile.34835cde9.css" rel="preload"/>
+<link as="script" href="../js/mobile.f2b743cbd.js" rel="preload"/>
+<meta content="1win" name="author"/>
+<meta content="1win" name="application-name"/>
+<link color="#090f1e" href="../img/icons/safari-pinned-tab.svg" rel="mask-icon"/>
+<meta content="img/icons/msapplication-icon-144x144.png" name="msapplication-TileImage"/>
+<link crossorigin="use-credentials" href="../fss/web-app-manifest/index.html" rel="manifest"/>
+<meta content="/index.html" name="msapplication-starturl"/>
+<meta content="#090f1e" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="#090f1e" name="msapplication-TileColor"/>
+<link href="../css/chunk-common.5a9d07c78.css" rel="stylesheet"/>
+<link href="../css/index.e36644051.css" rel="stylesheet"/>
+<title>1win</title>
+<style id="operaUserStyle" type="text/css"></style>
+<link href="../css/61255.4f034e44e.css" rel="stylesheet" type="text/css"/>
+<link href="../css/12988.c82c2dee8.css" rel="stylesheet" type="text/css"/>
+<link href="../css/mobile.34835cde9.css" rel="stylesheet" type="text/css"/>
+<link href="../css/stavki.css" rel="stylesheet" type="text/css"/>
+<link href="../style1.css" rel="stylesheet" type="text/css"/>
+<link href="../css/20948.309322c35.css" rel="stylesheet" type="text/css"/>
+<link href="../css/53995.141087ebf.css" rel="stylesheet" type="text/css"/>
+<link href="../css/25887.25dde41bb.css" rel="stylesheet" type="text/css"/>
+<link href="https://v3.bundlecdn.com/app/assets/betting-Bu1VeFmE.css" rel="stylesheet" type="text/css"/>
+<link href="https://1wpubu.life/betting/bets-history" rel="stylesheet" type="text/css"/>
+</head>
+<body class="webp" style="    max-width: 400px;
+    margin: 0 auto;">
+<style>
+  #fullscreenPopup {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .popup-content {
+    background: #fff;
+    border-radius: 12px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px;
+    width: 95%;
+    max-width: 420px;
+    position: relative;
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .popup-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .popup-content input,
+  .popup-content select {
+    background: #2b2f3a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .popup-content input::placeholder {
+    color: #ccc;
+  }
+
+  .popup-content h2 {
+    margin-bottom: 15px;
+  }
+
+  .popup-content button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+
+  .popup-overlay {
+    position: absolute;
+    inset: 0;
+  }
+</style>
+<div id="fullscreenPopup" style="display: none;">
+<div class="popup-overlay" onclick="hidePopup()"></div>
+<div class="popup-content" onclick="event.stopPropagation();">
+<button class="popup-close" onclick="hidePopup()">✕</button>
+<h2>Добавить фейковую ставку</h2>
+<form onsubmit="generateCoupon(event)">
+<label>Баланс на сайте</label>
+<input id="balanceInput" name="balance" placeholder="777" required="" type="text" value="4537.63"/>
+<select name="currency" required="">
+<option selected="" value="RUB">₽ Рубль</option>
+<option value="USD">$ Доллар</option>
+<option value="UAH">₴ Гривна</option>
+<option value="KZT">₸ Тенге</option>
+<option value="AZN">₼ AZN</option>
+<option value="UZS">сум (UZS)</option>
+</select>
+<label>Дата ставки</label>
+<input id="open_datetime" name="open_datetime" placeholder="Дата и время открытия" required="" type="text"/>
+<label>ID игры</label>
+<input id="coupon_id" name="coupon_id" type="text"/>
+<select id="sportSelect" name="sport" style="display: none">
+<option value="football">Футбол</option>
+<option value="basketball">Баскетбол</option>
+<option value="tennis">Теннис</option>
+<option value="volleyball">Волейбол</option>
+<option value="ice_hockey">Хоккей</option>
+<option value="boxing">Бокс</option>
+<option value="ufc">UFC</option>
+<option value="counter_strike2">CS 2</option>
+</select>
+<label>Коэффициент</label>
+<input name="coefficient" placeholder="Коэффициент" required="" type="text" value="3.70"/>
+<select id="marketSelect" name="market" onchange="toggleCustomInput('market')" style="display: none">
+<option value="Total">Total</option>
+<option value="Handicap">Handicap</option>
+<option value="Win">Win</option>
+<option value="Both Teams to Score">Both Teams to Score</option>
+<option value="Exact Score">Exact Score</option>
+<option value="custom">Другое...</option>
+</select>
+<input id="marketCustom" name="market_custom" placeholder="Введите своё значение" style="display: none;" type="text"/>
+<select id="submarketSelect" name="submarket" onchange="toggleCustomInput('submarket')" style="display: none">
+<option value="Under 1.5">Under 1.5</option>
+<option value="Over 2.5">Over 2.5</option>
+<option value="Draw">Draw</option>
+<option value="1X">1X</option>
+<option value="12">12</option>
+<option value="custom">Другое...</option>
+</select>
+<input id="submarketCustom" name="submarket_custom" placeholder="Введите своё значение" style="display: none;" type="text"/>
+<label>Кто играет</label>
+<input name="match" placeholder="Crystal Palace – Wolverhampton" required="" type="text" value="Crystal Palace – Wolverhampton"/>
+<input name="country" placeholder="Страна" style="display: none" type="text" value="England"/>
+<input name="championship" placeholder="Турнир" style="display: none" type="text" value="Premier League"/>
+<input name="match_date" placeholder="Дата матча" style="display: none" type="text" value="21 мая о 22:00"/>
+<label>Ставка</label>
+<input name="stake" placeholder="Ставка" required="" type="text" value="500,00"/>
+<input name="schet" placeholder="Ставка" style="display: none" type="text" value="0:0"/>
+<label>Продать за (если ставка открыта)</label>
+<input name="sumsell" placeholder="500,00" required="" type="text" value="500,00"/>
+<label>Возможный выигрыш</label>
+<input name="possible_win" placeholder="Возможный выигрыш" required="" type="text" value="1800,50"/>
+<input name="count" placeholder="Кол-во купонов" required="" style="display: none;" type="number" value="1"/>
+<label>Результат ставки</label>
+<select name="result" required="">
+<option selected="" value="won">Выиграла</option>
+<option value="wait">Открыта</option>
+<option value="lost">Проиграна</option>
+</select>
+<button name="generate" type="submit">Добавить</button>
+</form>
+</div>
+</div>
+<!-- СТИЛИ -->
+<style>
+#fullscreenPopup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.popup-content {
+  position: relative;
+  background: #1a1f2b;
+  color: white;
+  padding: 30px 40px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  animation: fadeIn 0.3s ease;
+}
+.popup-content h2 {
+  margin-top: 0;
+  text-align: center;
+}
+.popup-content input,
+.popup-content select {
+  background: #283142;
+  border: 1px solid #3b4c66;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+}
+.popup-content button[type="submit"] {
+  background: #31bc69;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.popup-content button[type="submit"]:hover {
+  background: #28a85c;
+}
+.popup-close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+<!-- СКРИПТ -->
+<script>
+function showPopup() {
+  document.getElementById('fullscreenPopup').style.display = 'flex';
+}
+function hidePopup() {
+  document.getElementById('fullscreenPopup').style.display = 'none';
+}
+</script>
+<div data-v-app="" id="app">
+<div class="ColorScheme_root_XJLuF colorSchemeDark">
+<div class="app-is-animate" id="app">
+<div>
+<div><svg height="0" style="position: absolute;" width="0">
+</svg>
+</div>
+</div>
+<div class="main-view">
+<div class="has-header has-tabs-padding" data-v-0886ea82="" id="main-layout" style="--6280e05a: 0px;">
+<div class="TopNotification_root_pj4Qx" data-v-0886ea82="" style="--6fe3e974: static; --b79832f8: 30px;">
+</div>
+<header class="" data-v-0cee0592="" id="header" style="height: 70px; background-color: rgb(20 20 21); ">
+<div class="header-content" data-v-0cee0592="">
+<img class="SvgLogo_svgLogo_tYTbP" src="img/logo.png" style="width: 87px; height: 35px;"/>
+<div class="controls" data-v-0cee0592="">
+<div class="controls-wrapper" data-v-0cee0592="">
+<div class="Tooltip_root_sF__N" data-v-0cee0592="">
+<div class="HeaderBalance_root_iPUwa HeaderBalance_mobile_BulPf">
+<div class="HeaderBalance_wrapper_b40Mz" style="background: none;">
+<div class="HeaderBalance_content_vcCP3">
+<div class="HeaderBalance_info_PbAHB">
+<div class="HeaderBalanceInfo_root_LYN5f HeaderBalanceInfo_mobile_WlxOi">
+<div class="HeaderBalanceInfo_top_pnHwQ" style="margin-bottom: 5px;">
+<div class="HeaderBalanceInfo_content_Fb3qB">
+<div class="HeaderBalanceInfo_name_u2NJV" id="headerCurrency" style="font-size: 13px;font-weight: 600;color: #a7a7a7;">RUB</div>
+<svg class="IconBase_xs_OQ8sI IconBase_root_U5LTW HeaderBalanceInfo_icon_tlDvI" height="14" role="presentation" viewbox="0 0 16 16" width="14" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M12.726 6.614a.953.953 0 000-1.337.928.928 0 00-1.252-.065l-.07.065L8 8.717l-3.403-3.44a.928.928 0 00-1.252-.065l-.071.065a.953.953 0 00-.064 1.265l.064.072 4.065 4.11a.928.928 0 001.251.064l.071-.065 4.065-4.109z" fill-rule="evenodd"></path>
+</svg>
+</div>
+</div>
+<div class="HeaderBalanceInfo_balance_Gw9TU" id="headerBalance" style="font-size: 14px;font-weight: 500;">0</div>
+</div>
+</div>
+<div class="HeaderBalance_buttonWrapper_lzaty" style="    padding: 0 5px;"><button class="Button_root_eTUot Button_sizeXs_FTbuT Button_variantPrimary_AfpyD DepositButton_mobile_AGLns" style="--button-size: 33px;
+    --button-icon-size: 36px;
+    --button-padding: 16;
+    font-weight: 600;">
+<span class="Button_content_mQ3xx">
+<div class="DepositButton_hide_uoOq1"><svg class="IconBase_m_Qax_Y IconBase_root_U5LTW DepositButton_icon_XcPw7" height="20" role="presentation" viewbox="0 0 16 16" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.38 8.708v1.103a2.76 2.76 0 002.758 2.759h2.207v.552a1.66 1.66 0 01-1.655 1.655H3.31A3.31 3.31 0 010 11.467V7.053a3.31 3.31 0 013.31-3.31h9.38c.91 0 1.655.739 1.655 1.655v.551h-2.207a2.76 2.76 0 00-2.759 2.759zm6.62 0v1.103a1.66 1.66 0 01-1.655 1.656h-2.207a1.66 1.66 0 01-1.655-1.656V8.708c0-.916.745-1.655 1.655-1.655h2.207c.42 0 .81.16 1.103.425.337.298.552.739.552 1.23zm-2.758.552a.553.553 0 00-.552-.552.553.553 0 00-.552.552c0 .303.248.551.552.551a.553.553 0 00.552-.551zm-1.87-7.735A1.67 1.67 0 0010.465.47a1.675 1.675 0 00-1.39.005L4.447 2.64h7.244l-.32-1.114z"></path>
+</svg></div><span class="DepositButton_text_qLDEY" onclick="document.getElementById('fullscreenPopup').style.display = 'flex';">Пополнить</span>
+</span></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="control-item" data-v-0cee0592=""><button class="button default profile-button" data-v-0cee0592=""><span class="button-content" style="    background: #2e2e30; border-radius: 10px;">
+<div class="profile-button__background" data-v-0cee0592=""></div>
+<svg class="icon-base_root-F1flk" data-icon="notification" height="16" role="presentation" style="fill: currentColor;" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M5.848 14.142c-.14-.014-.253.116-.202.248l.02.05a2.525 2.525 0 0 0 4.688-.05c.052-.132-.06-.262-.201-.248-.63.062-1.348.103-2.153.103s-1.523-.04-2.152-.103M13.51 8.586c-.551-.47-1.078-.917-.909-1.771.284-2.43-1.252-4.642-3.109-5.382l-.031-.111a2.3 2.3 0 0 0-.343-.695 1.65 1.65 0 0 0-.513-.464A1.23 1.23 0 0 0 8 0c-.208 0-.413.055-.605.163a1.65 1.65 0 0 0-.513.464 2.3 2.3 0 0 0-.374.807c-1.856.74-3.393 2.95-3.108 5.381.168.853-.364 1.305-.917 1.776-.524.445-1.066.906-1.055 1.738 0 1.165.657 1.797 1.622 2.11 0 0 1.767.683 4.95.683s4.95-.683 4.95-.683c.966-.313 1.623-.977 1.623-2.11 0-.84-.543-1.3-1.063-1.743"></path></svg>
+</span></button></div>
+</div>
+</div>
+</div>
+</header>
+<div class="wrapper" data-v-0886ea82="" style="background: rgb(240 242 245);">
+<div class="main-layout-item" data-v-0886ea82="">
+</div>
+<div class="body main-layout-item" data-v-0886ea82="">
+<div class="Detailing"><a class="back" data-tag="RouterLink" data-v-62d2d3c0="" href="index.html" style="justify-content: space-between;">
+<div style="display: flex; width: 20%;">
+<svg aria-hidden="true" class="icon icon-chevron-left-bold sm margin square back-icon back-icon" data-v-62d2d3c0="" role="img" viewbox="0 0 320 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"></path>
+</svg>
+<div class="back-page-name helper-line" data-v-62d2d3c0="" style="line-height: 1; ">Назад</div></div>
+<div class="back-page-name helper-line" data-v-62d2d3c0="" style="font-size: 15px; line-height: 1;">История ставок</div>
+<div class="back-page-name helper-line" data-v-62d2d3c0="" style="width: 20%;     text-align: right;"><img src="img/setting.png" style="width: 20px;"/></div>
+</a>
+<ul class="list separator" custom="" data-v-23adef66="">
+</ul>
+<div id="couponsContainer"></div>
+</div>
+</div>
+<div class="tabs" data-v-0886ea82="">
+<nav class="Tabs" data-v-2dd47523="">
+<!-- -->
+<ul class="Tabs__list" data-v-2dd47523="" style="--tabs__count-tabs: 6; --tabs__active-tab: 0;">
+<li class="Tabs__list-item" data-v-2dd47523="">
+<div class="Tabs__link" data-v-2dd47523="" type="button">
+<div class="Tabs__link-content" data-v-2dd47523="">
+<img src="img/burger.png" width="20px"/>
+<span class="Tabs__link-label" data-v-2dd47523="">Menu</span></div>
+</div>
+</li>
+<li class="Tabs__list-item" data-v-2dd47523=""><a class="Tabs__link" data-v-2dd47523="" href="index.html">
+<div class="Tabs__link-content" data-v-2dd47523="">
+<img src="img/home.png" width="20px"/>
+<span class="Tabs__link-label" data-v-2dd47523="">Home</span></div>
+</a></li>
+<li class="Tabs__list-item" data-v-2dd47523=""><a class="Tabs__link" data-v-2dd47523="" href="index.html">
+<div class="Tabs__link-content" data-v-2dd47523=""><img src="img/casino.png" width="20px"/>
+<span class="Tabs__link-label" data-v-2dd47523="">Casino</span></div>
+</a></li>
+<li class="Tabs__list-item" data-v-2dd47523=""><a class="Tabs__link" data-v-2dd47523="" href="index.html">
+<div class="Tabs__link-content" data-v-2dd47523=""><img src="img/gift.png" width="20px"/>
+<span class="Tabs__link-label" data-v-2dd47523="">Free Money</span></div>
+</a></li>
+<li class="Tabs__list-item" data-v-2dd47523=""><a class="Tabs__link" data-v-2dd47523="" href="index.html">
+<div class="Tabs__link-content" data-v-2dd47523=""><img src="img/sport.png" width="20px"/>
+<span class="Tabs__link-label" data-v-2dd47523="" style="color: #0075ff;">Betting</span></div>
+</a></li>
+</ul>
+</nav>
+</div>
+<style>
+    .Tabs[data-v-2dd47523] {
+    background-color: #141415;}
+    .Tabs__link-label[data-v-2dd47523] {
+    color: #536387;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 7;
+}
+</style> </div>
+</div>
+</div>
+</div>
+</div>
+<script>
+function generateCoupon(event) {
+  event.preventDefault();
+
+  const form = event.target;
+
+  // Баланс
+  let balanceRaw = form.querySelector('[name="balance"]').value.trim();
+  let balanceParsed = parseFloat(balanceRaw.replace(/\s/g, '').replace(',', '.')) || 0;
+  const formattedBalance = (balanceParsed % 1 === 0)
+    ? balanceParsed.toLocaleString('ru-RU')
+    : balanceParsed.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  // Валюта
+  const currency = form.currency.value;
+
+  // Обновляем в шапке
+  const headerBalance = document.getElementById("headerBalance");
+  const headerCurrency = document.getElementById("headerCurrency");
+  if (headerBalance) headerBalance.innerText = formattedBalance;
+  if (headerCurrency) headerCurrency.innerText = currency;
+
+  // 6. Считываем остальные данные из формы
+  const openDatetime = form.open_datetime.value;
+  const couponId = form.coupon_id.value;
+  const coefficient = form.coefficient.value;
+  const market = form.market.value === 'custom' ? form.market_custom.value : form.market.value;
+  const submarket = form.submarket.value === 'custom' ? form.submarket_custom.value : form.submarket.value;
+  const match = form.match.value;
+  const country = form.country.value;
+  const championship = form.championship.value;
+  const matchDate = form.match_date.value;
+  const stake = form.stake.value;
+  const schet = form.schet.value;
+  const possibleWin = form.possible_win.value;
+  const count = parseInt(form.count.value);
+  const sport = form.sport.value;
+  const sumsell = form.sumsell.value;
+  const selectedCurrency = form.currency.value;
+  const currencySymbols = {
+  RUB: '₽',
+  USD: '$',
+  UAH: '₴',
+  KZT: '₸',
+  AZN: '₼',
+  UZS: 'сум'
+  };
+
+  const container = document.getElementById("couponsContainer");
+
+// Карта спорта => HTML иконки
+  const sportIcons = {
+  football: `<i class="SportIcon_iconSport_qBKUo SportIcon_sport-providers_j202Z SportIcon_sport-football_pTaEj sport-icon" data-sporttagkey="football" style="--sport-icon-fill: #000;"></i>`,
+  basketball: `<i class="SportIcon_iconSport_qBKUo SportIcon_sport-providers_j202Z SportIcon_sport-basketball_lFzii sport-icon" data-sporttagkey="basketball" style="--sport-icon-fill: #000;"></i>`,
+  tennis: `<i class="SportIcon_iconSport_qBKUo SportIcon_sport-providers_j202Z SportIcon_sport-tennis_dQ6_F sport-icon" data-sporttagkey="tennis" style="--sport-icon-fill: #000;"></i>`,
+  volleyball: `<i class="SportIcon_iconSport_qBKUo SportIcon_sport-providers_j202Z SportIcon_sport-volleyball_xLL8C sport-icon" data-sporttagkey="volleyball" style="--sport-icon-fill: #000;"></i>`,
+  ice_hockey: `<i class="SportIcon_iconSport_qBKUo SportIcon_sport-providers_j202Z SportIcon_sport-ice_hockey_cGsYE sport-icon" data-sporttagkey="ice_hockey" style="--sport-icon-fill: #000;"></i>`,
+  boxing: `<i class="SportIcon_iconSport_qBKUo SportIcon_sport-providers_j202Z sport-icon" data-sporttagkey="boxing" style="--sport-icon-fill: #000;"></i>`,
+  ufc: `<i class="SportIcon_iconSport_qBKUo sport-icon" data-sporttagkey="ufc" style="--sport-icon-icon: url('https://d29lczghehjt5s.cloudfront.net/icons/d3cd1ed51b07a212905e69ccbd5c118c7745e4f6.webp'); --sport-icon-fill: #000;"></i>`,
+  counter_strike2: `<i class="SportIcon_iconSport_qBKUo SportIcon_sport-providers_j202Z SportIcon_sport-counter_strike2_urh_C sport-icon" data-sporttagkey="counter_strike2" style="--sport-icon-fill: #000;"></i>`
+};
+
+  const sportIconHTML = sportIcons[sport] || '';
+  for (let i = 0; i < count; i++) {
+  const result = form.result.value;
+
+  const isWin = result === 'won';
+  const isLost = result === 'lost';
+  const isWait = result === 'wait';
+  const currencySymbol = (isWin || isWait) ? (currencySymbols[selectedCurrency] || '') : '';
+  const possibleWin = isWin ? form.possible_win.value : isLost ? '' : form.possible_win.value;
+  const statusBlock = isWin ? `<div data-v-08d54e9a="" class="bet-coupon-stamp">Оплачено</div>` : '';
+  const blue = isWin ? '' : isLost ? '' : '_primary_1axu2_28';
+  const sell = isWin ? '' : isLost ? '' : `<button class="_sell_vl95h_41" type="button">
+       <div class="_view_14hcp_31">
+         <div class="_content_14hcp_38">Продать за ${sumsell} ${currencySymbol}</div>
+       </div>
+     </button>`;
+  const profitLabel = isWin ? 'Выигрыш' : isLost ? '' : 'Возможный выигрыш';
+  const profitColor = isWin ? '#139f05; font-weight: 600;' : isLost ? '' : '#139f05;';
+
+
+
+  const statusText =
+    isWin
+      ? `<span class="_root_1wnek_2 _win_1wnek_30"><img style="width: 12px;" src="img/check-circle.png">  Выиграна</span>`
+      : isLost
+      ? `<span class="_root_1wnek_2 _lose_1wnek_34"><img style="width: 12px;" src="img/close-circle.png">  Проиграна</span>`
+      : `<span class="_root_1wnek_2 _open_1wnek_44"><img style="width: 12px;" src="img/clock-circle.png">  Открыта</span>`;
+
+  const statusBlockIcon = isWin
+    ? `<div data-v-5e8c08d6="" data-v-4941592d="" class="bet-status bet-status--2 bet-status--smaller selection-status">
+         <svg data-v-5e8c08d6="" viewBox="0 0 11 8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="icon icon-line sm square bet-status-icon bet-status-icon" merge="">
+           <path d="M8.873.335a.986.986 0 111.482 1.302L5.128 7.582a.986.986 0 01-1.4.081L.324 4.594A.986.986 0 011.647 3.13l2.66 2.4L8.873.335z"></path>
+         </svg>
+       </div>`
+    : `<div data-v-5e8c08d6="" data-v-4941592d="" class="bet-status bet-status--0 bet-status--smaller selection-status">
+         <svg data-v-5e8c08d6="" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="icon icon-times-clock sm square bet-status-icon">
+           <path d="M6 12A6 6 0 116 0a6 6 0 010 12zm0-1.565a4.435 4.435 0 100-8.87 4.435 4.435 0 000 8.87zm1.696-4.348a.652.652 0 110 1.304H5.087V3.913a.652.652 0 111.304 0v2.174h1.305z"></path>
+         </svg>
+       </div>`;
+
+  const coupon = `
+  <div class="_root_vl95h_2" style="padding: 15px;"><div class="_main_gfx1z_2 _mainInert_gfx1z_6 _variantDefault_gfx1z_63 _container_vl95h_19"><div class="_overlay_gfx1z_10" style="background: #d7dbe2;"><div class="_subhead_gfx1z_17"><div class="_root_1y10k_2"><!----><p>${openDatetime}</p><div class="_id_1y10k_23"><button class="_root_gijvr_2 _sizeM_gijvr_20 _variantPrimary_gijvr_42"><!----><img style="width: 12px;" src="img/copy.png"><!----></button> ID ${couponId}</div></div></div><div class="_content_gfx1z_21"><div class="_content_vl95h_23"><div class="_root_1uhmj_2" style="color: black;"><div class="_title_1uhmj_29">${match}</div><span class="_root_1axu2_2 _neutralPreview_1axu2_37 _coef_1uhmj_16 ${blue}">${coefficient}</span><!----></div><div class="_root_oors9_2"><div class="_type_oors9_10"><!----><p>Ординар</p></div><!---->${statusText}</div>
+
+<div class="_detailsCol_vl95h_35"><div class="_multiline_zlfb0_22"><!----><div class="_box_zlfb0_29 _bet_zlfb0_77"><p class="_title_zlfb0_57">Сумма ставки</p><p class="_value_zlfb0_38">${stake} ${currencySymbol}</p></div><div class="_box_zlfb0_29 _winnings_zlfb0_91"><p class="_title_zlfb0_57">${profitLabel}</p><p class="_value_zlfb0_38 _amount_zlfb0_12" style="color: ${profitColor};">${possibleWin} ${currencySymbol}</p></div></div><!----></div>
+</div>${sell}</div></div></div></div></div>`;
+
+    container.insertAdjacentHTML('beforeend', coupon);
+  }
+
+  hidePopup();
+}
+</script>
+<style type="text/css">
+        .namepos {
+            margin-top: 10px
+        }
+    </style>
+<script>
+function hidePopup() {
+  document.getElementById('fullscreenPopup').style.display = 'none';
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const now = new Date();
+  const options = { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Kyiv' };
+  const formatted = now.toLocaleString('ru-RU', options).replace(',', ' о');
+
+  document.getElementById('open_datetime').value = formatted;
+
+  const randomId = '1400' + Math.floor(100000 + Math.random() * 899999);
+  document.getElementById('coupon_id').value = randomId;
+});
+</script>
+<script>
+function toggleCustomInput(type) {
+  const select = document.getElementById(type + 'Select');
+  const input = document.getElementById(type + 'Custom');
+
+  if (select.value === 'custom') {
+    input.style.display = 'block';
+    input.required = true;
+  } else {
+    input.style.display = 'none';
+    input.required = false;
+  }
+}
+</script>
+</div></body>
+</html>
+<style>
+    .HeaderBalance_wrapper_b40Mz .HeaderBalance_buttonWrapper_lzaty span {
+    font-family: var(--font-family-text);
+    /* font-size: 12px !important; */
+    letter-spacing: 0;
+    line-height: 16px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.back[data-v-62d2d3c0] {
+    color: rgb(20, 20, 21);
+    font-weight: 600;
+}
+.back .back-icon[data-v-62d2d3c0], .back .back-page-name[data-v-62d2d3c0] {
+    font-size: 12px;
+}
+._variantDefault_gfx1z_63 ._content_gfx1z_21 {
+    background: white;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: rgb(83, 87, 95);
+}
+._root_1y10k_2 {
+    letter-spacing: .01px;
+    color: rgb(83, 87, 95);
+    justify-content: space-between;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    display: flex;
+}
+._type_oors9_10 {
+    letter-spacing: .01px;
+    color: rgb(83, 87, 95);
+    flex: auto;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    display: flex;
+}
+._lose_1wnek_34 {
+    background-color: rgb(163 171 187 / 16%);
+    color: rgb(83, 87, 95);
+}
+._bet_zlfb0_77 ._title_zlfb0_57 {
+    letter-spacing: .01px;
+    color: rgb(83, 87, 95);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+}
+._bet_zlfb0_77 ._value_zlfb0_38 {
+    color: rgb(20, 20, 21);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+._winnings_zlfb0_91 ._title_zlfb0_57 {
+    letter-spacing: .01px;
+    color: rgb(83, 87, 95);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+}
+._winnings_zlfb0_91 ._value_zlfb0_38 {
+    color: rgb(0, 178, 75);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+._open_1wnek_44 {
+    background-color: rgb(255 165 38 / 12%);
+    color: rgb(255, 165, 38);
+}
+._win_1wnek_30 {
+    background-color: rgb(0 178 75 / 12%);
+    color: rgb(0, 178, 75);
+}
+._neutralPreview_1axu2_37 {
+    background-color: rgb(163 171 187 / 16%);
+    color: rgb(20, 20, 21);
+        padding: 5;
+    border-radius: 10px;
+}
+._primary_1axu2_28 {
+    background: rgb(0, 117, 255);
+    color: white;
+}
+._sell_vl95h_41 {
+    background: rgb(0, 217, 91);
+    color: white;
+    width: 100%;
+    height: 45px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+</style>
